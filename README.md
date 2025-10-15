@@ -41,16 +41,16 @@ Voice Travel Agent converts a single webhook (voice or text) request into a cura
 
 ```mermaid
 flowchart TD
-  A[Webhook: /webhook-test/travel (POST)] --> B[Set Incoming Fields]
-  B --> C[Airport Codes & Dates (AI)]
-  C --> D[Tavily: Activities (HTTP POST)]
-  C --> E[SerpAPI: Hotels (google_hotels)]
-  C --> F[SerpAPI: Flights (google_flights)]
-  D --> G[AI Agent: Email Generator]
+  A[Webhook] --> B[Set Fields]
+  B --> C[Airport Codes]
+  C --> D[Tavily]
+  C --> E[Hotels]
+  C --> F[Flights]
+  D --> G[Email Gen]
   E --> G
   F --> G
-  G --> H[Gmail AIS: Send Travel Plan (HTML)]
-  H --> I[Respond to Webhook: Confirmation]
+  G --> H[Gmail]
+  H --> I[Respond]
 ```
 
 ---
@@ -80,7 +80,6 @@ flowchart TD
   * `travelers` = `{{ $json.body.travelers }}`
   * `activities` = `{{ $json.body.activities }}`
   * `email` = `{{ $json.body.email }}`
-
 ---
 
 ### Step 3 — Airport Codes & Dates (AI step)
@@ -104,7 +103,6 @@ flowchart TD
     "days": 3,
     "include_answer": true
   }
-  ```
 
 ---
 
@@ -133,8 +131,8 @@ flowchart TD
   * `emailBody` (string) — HTML, with clickable links and resort images (`<img src="...">`)
 * **Important:** Keep output ≤ 1000 words; sanitize external image URLs before embedding.
 
-```json
-{
+
+* **System :** 
 You are an expert email writer specializing in creating travel plans. Your job is to output an HTML email with clickable links. You must output a subject and an emailBody in separate parameters.
 
 Objective:
@@ -144,8 +142,7 @@ Objective:
 - Use images for resorts: <img src="{image url}" style="max-width:20%; height:auto;">
 - Sign off as: TrueHorizon Travel Team
 - Do not exceed 1000 words.
-```
-
+  
 ---
 
 ### Step 8 — Send Travel Plan (Gmail AIS node)
@@ -218,8 +215,6 @@ Objective:
 ## 📥 **Free Workflow Template**
 
 * **Download:** [n8n workflow JSON](https://github.com/SachinSavkare/Voice-Travel-Agent-n8n/blob/main/23.%20Voice%20Travel%20Agent.json)
-  *(Replace with your actual workflow export link once you upload.)*
-
 ---
 
 ## ✍️ **Author**
@@ -227,10 +222,3 @@ Objective:
 **Sachin Savkare**
 📧 `sachinsavkare08@gmail.com`
 ---
-
-If this looks good I will:
-
-* paste a final single-file README ready to copy/paste into your repo (with the workflow diagram link you’ll provide), or
-* produce a variant targeted to a specific audience (corporate travel desk / travel agency).
-
-Which would you like next?
